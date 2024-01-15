@@ -26,8 +26,8 @@ class _ApplicationState extends BaseState<Application> {
   @override
   Future<void> onResume() async {
     super.onResume();
-    final currentLocation = ref.read(routerProvider).location;
-    if (currentLocation == AppScreens.main.path) {
+    final locations = ref.read(routerProvider).routerDelegate.currentConfiguration.matches.map((e) => e.subloc);
+    if (locations.contains(AppScreens.main.path)) {
       ref.read(routerProvider).go(AppScreens.verify_biometric.path);
     }
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:w_sentry/common/extensions/text_style_ext.dart';
 import 'package:w_sentry/presentation/app_router.dart';
@@ -82,9 +83,16 @@ class _HomeScreenState extends BaseState<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 18),
-                const Text('Server Status', style: AppTypography.poppins_14px_w600),
-                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Server Status', style: AppTypography.poppins_14px_w600),
+                      _buildViewAllButton(state),
+                    ],
+                  ),
+                ),
                 StatusCard(isActive: true, quantity: state.activeServers.length),
                 const SizedBox(height: 10),
                 StatusCard(isActive: false, quantity: state.inActiveServers.length),
@@ -111,6 +119,28 @@ class _HomeScreenState extends BaseState<HomeScreen> {
               ],
             );
           }),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildViewAllButton(HomeState state) {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      minSize: 0,
+      onPressed: () {
+        push(AppScreens.server_list.path, extra: state.servers);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.primary),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          'View all',
+          style: AppTypography.poppins_12px_w500.withColor(AppColors.primary),
         ),
       ),
     );

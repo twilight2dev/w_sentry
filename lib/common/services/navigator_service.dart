@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:w_sentry/data/source/remote/exceptions/api_exception.dart';
+import 'package:w_sentry/presentation/app_router.dart';
 import 'package:w_sentry/presentation/shared_providers/auth/auth_viewmodel.dart';
 import 'package:w_sentry/presentation/shared_widgets/bottom_sheet/bottom_sheet_handle_bar.dart';
 import 'package:w_sentry/presentation/shared_widgets/dialog/confirmation_dialog.dart';
@@ -127,6 +128,7 @@ class NavigatorService {
           onConfirm: () {
             if (isAuthException) {
               ref.read(authVMProvider.notifier).logout();
+              ref.read(routerProvider).go(AppScreens.login.path);
             }
           },
         );
