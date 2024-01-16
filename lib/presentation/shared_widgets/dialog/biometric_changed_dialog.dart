@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:w_sentry/presentation/app_router.dart';
-import 'package:w_sentry/presentation/shared_widgets/button/app_gradient_button.dart';
+import 'package:w_sentry/presentation/shared_widgets/button/app_filled_button.dart';
 import 'package:w_sentry/res/app_dimens.dart';
 import 'package:w_sentry/res/app_typography.dart';
 

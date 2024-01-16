@@ -1,18 +1,20 @@
+import 'package:w_sentry/data/enum/local_auth_type.dart';
+
 class AuthState {
   AuthState({
-    this.isBiometricSetup = false,
+    this.localAuthType = LocalAuthType.none,
     this.loggedInEmail,
   });
 
-  final bool isBiometricSetup;
+  final LocalAuthType localAuthType;
   final String? loggedInEmail;
 
   AuthState copyWith({
-    bool? isBiometricSetup,
+    LocalAuthType? localAuthType,
     String? loggedInEmail,
   }) {
     return AuthState(
-      isBiometricSetup: isBiometricSetup ?? this.isBiometricSetup,
+      localAuthType: localAuthType ?? this.localAuthType,
       loggedInEmail: loggedInEmail ?? this.loggedInEmail,
     );
   }

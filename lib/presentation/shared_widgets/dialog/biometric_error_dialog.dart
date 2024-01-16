@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:w_sentry/common/services/biometric_auth_service.dart';
 import 'package:w_sentry/common/services/navigator_service.dart';
-import 'package:w_sentry/presentation/shared_widgets/button/app_gradient_button.dart';
+import 'package:w_sentry/presentation/shared_widgets/button/app_filled_button.dart';
 import 'package:w_sentry/res/app_colors.dart';
 import 'package:w_sentry/res/app_dimens.dart';
 import 'package:w_sentry/res/app_typography.dart';

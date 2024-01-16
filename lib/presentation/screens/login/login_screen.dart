@@ -10,7 +10,7 @@ import 'package:w_sentry/presentation/screens/login/login_state.dart';
 import 'package:w_sentry/presentation/screens/login/login_viewmodel.dart';
 import 'package:w_sentry/presentation/shared_widgets/animations/immediate/immediate_slide_animation.dart';
 import 'package:w_sentry/presentation/shared_widgets/app_logo.dart';
-import 'package:w_sentry/presentation/shared_widgets/button/app_gradient_button.dart';
+import 'package:w_sentry/presentation/shared_widgets/button/app_filled_button.dart';
 import 'package:w_sentry/presentation/shared_widgets/clear_focus.dart';
 import 'package:w_sentry/presentation/shared_widgets/dialog/confirmation_dialog.dart';
 import 'package:w_sentry/presentation/shared_widgets/form_field/app_field.dart';

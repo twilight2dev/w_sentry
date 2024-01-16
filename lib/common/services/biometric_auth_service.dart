@@ -10,7 +10,7 @@ enum BiometricErrorType {
   noBiometricEnrolled,
   noHardware,
   canceled,
-  needSetup,
+  authChanged,
   timeout,
 }
 
@@ -53,7 +53,7 @@ class BiometricAuthService {
 
     return _safeCall(
       callback: () async {
-        final storage = await getStorage(title: 'Setup Fingerprint!');
+        final storage = await getStorage(title: 'Setup your Fingerprint!');
         await storage.write(accessToken);
         SessionMananagent.setAccessToken(accessToken);
         return null;
@@ -65,17 +65,17 @@ class BiometricAuthService {
     final error = await checkAvailable();
     if (error != null) {
       if (error == BiometricErrorType.noBiometricEnrolled) {
-        return BiometricErrorType.needSetup;
+        return BiometricErrorType.authChanged;
       }
       return error;
     }
 
     return _safeCall(
       callback: () async {
-        final storage = await getStorage(title: 'Verify Fingerprint!');
+        final storage = await getStorage(title: 'Verify your Fingerprint!');
         final storedData = await storage.read();
         if (storedData == null || storedData.isEmpty) {
-          return BiometricErrorType.needSetup;
+          return BiometricErrorType.authChanged;
         }
         SessionMananagent.setAccessToken(storedData);
         return null;

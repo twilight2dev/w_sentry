@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:w_sentry/common/services/biometric_auth_service.dart';
 import 'package:w_sentry/common/services/messenger_service.dart';
 import 'package:w_sentry/common/services/navigator_service.dart';
+import 'package:w_sentry/data/enum/local_auth_type.dart';
+import 'package:w_sentry/data/source/local/storage/local_storage.dart';
+import 'package:w_sentry/presentation/shared_widgets/dialog/biometric_changed_dialog.dart';
+import 'package:w_sentry/presentation/shared_widgets/dialog/biometric_error_dialog.dart';
+import 'package:w_sentry/presentation/shared_widgets/dialog/confirm_passcode_dialog.dart';
 import 'package:w_sentry/presentation/shared_widgets/snackbar/app_snackbar_type.dart';
 
 abstract class BaseStatefulWidget extends ConsumerStatefulWidget {
@@ -136,7 +142,7 @@ abstract class BaseState<P extends BaseStatefulWidget> extends ConsumerState<P> 
   void showSnackBar({
     required String message,
     required AppSnackBarType type,
-    Duration duration = const Duration(seconds: 2),
+    Duration duration = const Duration(seconds: 3),
     String? actionLabel,
     dynamic Function()? onActionPressed,
   }) {
@@ -160,5 +166,34 @@ abstract class BaseState<P extends BaseStatefulWidget> extends ConsumerState<P> 
 
   void showHelpMessage(message) {
     showSnackBar(message: message, type: AppSnackBarType.help);
+  }
+
+  ///***************************************************************************
+  /// LOCAL AUTH
+  ///***************************************************************************
+
+  Future<void> verifyLocalAuth({required Future Function() callback}) async {
+    final localAuthType = ref.read(localStorageProvider).getLocalAuthType();
+    if (localAuthType == LocalAuthType.biometric) {
+      final verifyError = await ref.read(biometricAuthServiceProvider).verify();
+      if (mounted) {
+        if (verifyError != null) {
+          if (verifyError == BiometricErrorType.authChanged) {
+            openDialog(builder: (context) => const BiometricChangedDialog());
+          } else {
+            openDialog(builder: (context) => BiometricErrorDialog(errorType: verifyError));
+          }
+        } else {
+          callback();
+        }
+      }
+    } else {
+      openDialog(
+        useSafeArea: false,
+        builder: (context) {
+          return ConfirmPasscodeDialog(callback: callback);
+        },
+      );
+    }
   }
 }

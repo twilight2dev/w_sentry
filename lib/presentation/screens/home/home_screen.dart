@@ -103,14 +103,18 @@ class _HomeScreenState extends BaseState<HomeScreen> {
                     ControlButton(
                       size: buttonWidth,
                       label: 'Stop',
-                      onPressed: viewModel.stopServer,
+                      onPressed: () {
+                        verifyLocalAuth(callback: viewModel.stopServer);
+                      },
                       color: AppColors.redFF3654,
                     ),
                     const SizedBox(width: 20),
                     ControlButton(
                       size: buttonWidth,
                       label: 'Start',
-                      onPressed: viewModel.startServer,
+                      onPressed: () {
+                        verifyLocalAuth(callback: viewModel.startServer);
+                      },
                       color: AppColors.green6DC965,
                     ),
                   ],

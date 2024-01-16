@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:w_sentry/data/enum/local_auth_type.dart';
 import 'package:w_sentry/presentation/app_router.dart';
 import 'package:w_sentry/presentation/base/base_stateful_widget.dart';
 import 'package:w_sentry/presentation/shared_providers/auth/auth_viewmodel.dart';
@@ -18,13 +19,13 @@ class _SplashScreenState extends BaseState<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 2), () {
-      ref.read(authVMProvider.notifier).checkBiometricSetup();
+      ref.read(authVMProvider.notifier).checkLocalAuthSetup();
     });
   }
 
   void listenAuthState() {
     ref.listen(authVMProvider, (previous, current) {
-      if (current.isBiometricSetup) {
+      if (current.localAuthType != LocalAuthType.none) {
         context.go(AppScreens.verify_biometric.path);
       } else {
         context.go(AppScreens.login.path);

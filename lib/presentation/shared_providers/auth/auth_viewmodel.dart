@@ -21,9 +21,9 @@ class AuthViewModel extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> checkBiometricSetup() async {
-    final isBiometricSetup = localStorage.isBiometricSetup.get() ?? false;
-    state = state.copyWith(isBiometricSetup: isBiometricSetup);
+  Future<void> checkLocalAuthSetup() async {
+    final localAuthType = localStorage.getLocalAuthType();
+    state = state.copyWith(localAuthType: localAuthType);
   }
 
   Future<void> logout() async {
